@@ -42,7 +42,6 @@ group :production do
 	#necessary on heroku
 	gem 'pg'
 	gem 'rails_12factor'
-
 end
 
 
