@@ -29,6 +29,12 @@ gem 'jbuilder', '~> 2.5'
 #gem 'carrierwave', '~> 0.10.0'
 #gem 'mini_magick', '~> 4.3'
 
+gem 'paperclip'
+gem 'cocaine'
+gem 'figaro'
+gem 'bootstrap-sass'
+gem 'bootstrap', '~> 4.0.0.alpha5'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
