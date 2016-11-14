@@ -7,9 +7,9 @@ class User < ApplicationRecord
   #before_action :authenticate_user!
   
   has_many :favorites, dependent: :destroy
-  has_many :favorite_restaurants, through: :favorites
+  has_many :favorite_restaurants, through: :favorites, source: :restaurant
 
   has_many :reviews, dependent: :destroy
-  has_many :reviewed_restaurants, through: :reviews
+  has_many :reviewed_restaurants, through: :reviews, source: :restaurant
 
 end
