@@ -33,7 +33,7 @@ gem 'paperclip'
 gem 'cocaine'
 gem 'figaro'
 gem 'bootstrap-sass'
-gem 'bootstrap', '~> 4.0.0.alpha5'
+#gem 'bootstrap', '~> 4.0.0.alpha5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
