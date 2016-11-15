@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :favorite]
 
   # GET /restaurants
   # GET /restaurants.json
@@ -10,6 +10,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
+    @favorited_by = @restaurant.favorited_by
   end
 
   # GET /restaurants/new
@@ -61,6 +62,19 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  def favorite
+    
+    if current_user.favorite_restaurants.include?(@restaurant)
+      current_user.favorite_restaurants.delete(@restaurant)
+      redirect_to :back, notice: "You removed #{@restaurant.name} from your favorites."
+    else
+      current_user.favorite_restaurants << @restaurant
+      redirect_to :back, notice: "You added #{@restaurant.name} to your favorites."
+    end 
+
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
@@ -69,6 +83,11 @@ class RestaurantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
-      params.require(:restaurant).permit(:name, :address, :image)
+      params.require(:restaurant).permit(:name, :address, :image, :favorite)
     end
+
+    def favorite_params
+      params.require(:user_id, :id)
+    end
+
 end

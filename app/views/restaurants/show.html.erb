@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Image:</strong>
+  <%= @restaurant.image %>
+</p>
+
+<p>
   <strong>Name:</strong>
   <%= @restaurant.name %>
 </p>
@@ -10,15 +15,31 @@
   <%= @restaurant.address %>
 </p>
 
-<p>
-	<strong>
-		<%= link_to 'Favorite', create_favorite_path(@restaurant) %>
-	</strong>
-</p>
 
 <p>
-  <strong>Image:</strong>
-  <%= @restaurant.image %>
+<%= link_to 'Favorite:',  favorite_restaurant_path(@restaurant), method: :put %>
+
+<% if current_user %>
+	<% 
+		if current_user.favorite_restaurants.include?(@restaurant)
+			favorite_image_path = 'star.png'
+			puts "Favorite"
+		else
+			favorite_image_path = 'unstar.png'
+			puts "Not favorite"
+		end
+	%>
+
+	<%= link_to (image_tag favorite_image_path, style: 'height: 30px;'), favorite_restaurant_path(@restaurant), method: :put %>
+<% end %>
+</p>
+
+<% @favorited_by.each do |user| %>
+	<%= user.email %>
+<% end %>
+
+<p>
+<%= link_to 'Review this restaurant', new_restaurant_review_path(@restaurant) %>
 </p>
 
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |

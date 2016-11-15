@@ -1,6 +1,4 @@
 class FavoritesController < ApplicationController
-  def add
-  end
 
   def new
   	@favorite = current_user.favorites.build
