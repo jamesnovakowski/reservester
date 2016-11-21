@@ -10,7 +10,11 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
-    @favorited_by = @restaurant.favorited_by
+    #Wrap in if statement so that only Owners can see this list.
+    #On second thought, make a different page for showing all users who marked restaurant as a favorite.
+    @favorited_by = @restaurant.favorited_by #leaving for now, so I can validate it's working.
+    @reviews = @restaurants.reviews
+    @reviewed_by = @reviews.reviewed_by
   end
 
   # GET /restaurants/new
