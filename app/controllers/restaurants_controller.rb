@@ -13,8 +13,10 @@ class RestaurantsController < ApplicationController
     #Wrap in if statement so that only Owners can see this list.
     #On second thought, make a different page for showing all users who marked restaurant as a favorite.
     @favorited_by = @restaurant.favorited_by #leaving for now, so I can validate it's working.
-    @reviews = @restaurants.reviews
-    @reviewed_by = @reviews.reviewed_by
+    if @restaurant.reviews
+      @reviews = @restaurant.reviews
+      @reviewed_by = @restaurant.reviewed_by
+    end
   end
 
   # GET /restaurants/new
@@ -61,7 +63,7 @@ class RestaurantsController < ApplicationController
   def destroy
     @restaurant.destroy
     respond_to do |format|
-      format.html { redirect_to restaurants_url, notice: 'Restaurant was successfully destroyed.' }
+      format.html { redirect_to @restaurant, notice: 'Restaurant was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -91,7 +93,7 @@ class RestaurantsController < ApplicationController
     end
 
     def favorite_params
-      params.require(:user_id, :id)
+      params.require(:owner_id, :id)
     end
 
 end

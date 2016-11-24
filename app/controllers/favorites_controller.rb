@@ -9,7 +9,7 @@ class FavoritesController < ApplicationController
   	@favorite = current_user.favorites.build(favorite_params)
 
     if @favorite.save
-      redirect_to @favorite, notice: 'Pin was successfully created.' 
+      redirect_to @favorite, notice: 'Favorite was successfully created.' 
     else
       render :new
     end

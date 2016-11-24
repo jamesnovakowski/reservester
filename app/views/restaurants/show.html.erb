@@ -35,9 +35,17 @@
 </p>
 
 <% @reviews.each do |review| %>
-	<%= review.rating %>
-	<%= review.text %>
-	<%= @reviewed_by
+	<div class="panel panel-default">
+		<%= "User_ID: #{review.user_id}" %> </br>
+		<%= "Rating: #{review.rating}" %> </br>
+		<%= "Review: #{review.text}" %> </br>
+		<%= "Review_Id: #{review.id}" %> </br>
+		<%= "Restaurant_ID: #{review.restaurant_id}" %> </br>
+		<% if current_user && review.user_id == current_user.id %>
+			<%= link_to "Edit Review", edit_restaurant_review_path(@restaurant, review) %>
+			<%= link_to "Delete Review", restaurant_review_path(@restaurant, review), method: :delete %>
+		<% end %>
+	</div>
 <% end %>
 
 <p>

@@ -4,4 +4,8 @@ class Restaurant < ApplicationRecord
 
 	has_many :reviews, dependent: :destroy
 	has_many :reviewed_by, through: :reviews, source: :user
+
+	belongs_to :owner
+	alias_attribute :owner, :user
+	
 end

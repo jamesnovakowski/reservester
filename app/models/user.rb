@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :reviewed_restaurants, through: :reviews, source: :restaurant
 
+  has_many :restaurants, dependent: :destroy #Consider removing dependent: :destroy?
+
 end
