@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'categories/index' => 'categories#index'
+
+  resources :categories
+
+
   devise_for :users
   resources :restaurants do
     put :favorite, on: :member
