@@ -15,9 +15,9 @@
       <tr>
         <td><%= restaurant.name %></td>
         <td><%= restaurant.address %></td>
-        <td><%= restaurant.image %></td>
+        <td><%= image_tag restaurant.image.url(:thumb) %></td>
         <td><%= link_to 'Show', restaurant %></td>
-        <% if current_user && current_user.id == restaurant.owner_id %>
+        <% if current_user && current_user.id == restaurant.user_id %>
           <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
           <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>

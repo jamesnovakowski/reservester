@@ -32,6 +32,7 @@ class RestaurantsController < ApplicationController
   # POST /restaurants.json
   def create
     @restaurant = Restaurant.new(restaurant_params)
+    @restaurant.user_id = current_user.id
 
     respond_to do |format|
       if @restaurant.save
@@ -93,7 +94,7 @@ class RestaurantsController < ApplicationController
     end
 
     def favorite_params
-      params.require(:owner_id, :id)
+      params.require(:user_id, :id)
     end
 
 end
