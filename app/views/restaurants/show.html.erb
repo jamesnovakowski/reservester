@@ -1,11 +1,7 @@
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @restaurant.image.url(:medium) %>
-</p>
+<h1><%=@restaurant.name%></h1>
 
 <p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
+  <%= image_tag @restaurant.image.url(:medium) %>
 </p>
 
 <p>
@@ -49,11 +45,51 @@
 <% end %>
 
 <p>
+<strong>Favorited By: </strong>
 <% @favorited_by.each do |user| %>
 	<%= user.email %>
 <% end %>
 </p>
 
+<div class="panel panel-default">
+	<div class="panel-heading">Categories</div>
+	<div class="panel-body">
+		<div class="row">
+			<% @categories.each do |c| %>
+				<div class="col-md-1">
+					<%= c.name %>
+				</div>
+			<% end %>
+		</div>
+	</div> <!-- panel-body-->
+	
+	<div class="panel-footer">
+		<%= form_tag('/restaurant/add_category', method: :post) %>
+			<% if @category.errors.any? %>
+				<div id="erro_explanation">
+					<h2> <%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+					<ul>
+						<% category.errors.full_messages.each do |message| %>
+								<li><%= message %></li>
+						<% end %>
+					</ul>
+				</div>
+			<% end %>
+
+			<div class="field">
+				<%= label_tag("Category") %>
+				<%= text_field_tag(:category) %>
+			</div>
+
+			<%= hidden_field_tag :id, @restaurant.id %>
+
+			<div class="actions">
+				<%= submit_tag("Add Category") %>
+			</div>
+
+	</div>
+</div>
 <p>
 <%= link_to 'Review this restaurant', new_restaurant_review_path(@restaurant, current_user) %>
 </p>

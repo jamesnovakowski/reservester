@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
+  
+  
   get 'categories/index' => 'categories#index'
-
   resources :categories
-
+  post 'restaurant/add_category' => 'restaurants#add_category'
 
   devise_for :users
   resources :restaurants do

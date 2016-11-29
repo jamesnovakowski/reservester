@@ -1,5 +1,17 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:destroy]
+
+  @@category_list = []
+
+  def add_all_categories
+    @categories = Category.all?
+    @categories.each do |c|
+      if c.name not in @@category.list
+        @@category_list.push(c.name)
+      end
+    end
+  end
+
   def new
   	@category = Category.new()
   end
@@ -41,4 +53,5 @@ class CategoriesController < ApplicationController
   def set_category
   	@category = Category.find(params[:id])
   end
+
 end

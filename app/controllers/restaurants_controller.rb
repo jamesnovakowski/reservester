@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :favorite]
+  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :favorite, :add_category]
+  before_action :set_category, only: [:add_category]
 
   # GET /restaurants
   # GET /restaurants.json
@@ -17,6 +18,8 @@ class RestaurantsController < ApplicationController
       @reviews = @restaurant.reviews
       @reviewed_by = @restaurant.reviewed_by
     end
+    @categories = @restaurant.categories
+    @category = Category.new
   end
 
   # GET /restaurants/new
@@ -81,6 +84,22 @@ class RestaurantsController < ApplicationController
 
   end
 
+  def add_category
+    @category = Category.find_by(name: params[:category])
+
+    if @category === nil
+      redirect_to @restaurant, notice: "There is no category by the name #{params[:category]}."
+    else
+      if @restaurant.categories.include?(@category)
+        @restaurant.categories.delete(@category)
+        redirect_to :back, notice: "You removed #{@category.name} from the restaurant categoies."
+      else
+        @restaurant.categories << @category
+        redirect_to :back, notice: "You added #{@category.name} to the restaurant categories."
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -95,6 +114,10 @@ class RestaurantsController < ApplicationController
 
     def favorite_params
       params.require(:user_id, :id)
+    end
+
+    def set_category
+      @category = Category.where(name: params[:category])
     end
 
 end
