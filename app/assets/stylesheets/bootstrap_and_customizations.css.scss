@@ -1,1 +1,10 @@
+@import "bootstrap-sprockets";
 @import "bootstrap";
+
+.category {
+	border-radius: 5px;
+	border-color: Black;
+	border-style: solid;
+	display: inline-block;
+	padding: 5px;
+}

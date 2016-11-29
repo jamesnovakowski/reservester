@@ -18,7 +18,8 @@ class RestaurantsController < ApplicationController
       @reviews = @restaurant.reviews
       @reviewed_by = @restaurant.reviewed_by
     end
-    @categories = @restaurant.categories
+    @categories = @restaurant.categories.order(:name)
+    @all_categories = Category.all.order(:name)
     @category = Category.new
   end
 
@@ -85,19 +86,26 @@ class RestaurantsController < ApplicationController
   end
 
   def add_category
-    @category = Category.find_by(name: params[:category])
+    category = Category.find_by(name: params[:category])
 
-    if @category === nil
+    if category === nil
       redirect_to @restaurant, notice: "There is no category by the name #{params[:category]}."
     else
-      if @restaurant.categories.include?(@category)
-        @restaurant.categories.delete(@category)
-        redirect_to :back, notice: "You removed #{@category.name} from the restaurant categoies."
+      if @restaurant.categories.include?(category)
+        redirect_to :back, notice: "#{category.name} is already in the restaurant categoies."
       else
         @restaurant.categories << @category
-        redirect_to :back, notice: "You added #{@category.name} to the restaurant categories."
+        redirect_to :back, notice: "You added #{category.name} to the restaurant categories."
       end
     end
+  end
+
+  def remove_category
+    category = Category.find_by(name: params[:category])
+
+    @restaurant.categories.delete(category)
+
+    redirect_to :back, notice: "You have removed #{category.name} from the restaurant categories."
   end
 
 

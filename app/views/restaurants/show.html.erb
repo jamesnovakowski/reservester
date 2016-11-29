@@ -54,13 +54,14 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Categories</div>
 	<div class="panel-body">
-		<div class="row">
-			<% @categories.each do |c| %>
-				<div class="col-md-1">
-					<%= c.name %>
-				</div>
-			<% end %>
-		</div>
+		<% @categories.each do |category| %>
+			<div class="category">
+				<%= category.name %>
+				<%= link_to restaurant_remove_category_path, category: category, method: :delete, :class => "btn btn-danger" do %>
+				  <span class="glyphicon glyphicon-trash" font-color="white" aria-hidden="true"></span>
+				<% end %>
+			</div>
+		<% end %>
 	</div> <!-- panel-body-->
 	
 	<div class="panel-footer">
@@ -78,8 +79,7 @@
 			<% end %>
 
 			<div class="field">
-				<%= label_tag("Category") %>
-				<%= text_field_tag(:category) %>
+				<%= select_tag "category", options_from_collection_for_select(@all_categories, "name", "name") %>
 			</div>
 
 			<%= hidden_field_tag :id, @restaurant.id %>

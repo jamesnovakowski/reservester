@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_restaurant, only: [:new, :create, :show, :destroy]
+  before_action :set_restaurant, only: [:new, :create, :show, :update, :destroy]
   before_action :set_review, only: [:edit, :update, :show, :destroy]
 
   def new
