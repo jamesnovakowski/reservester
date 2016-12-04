@@ -12,5 +12,7 @@ class Restaurant < ApplicationRecord
 	#paperclip requires the image item be validated.
 	validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
+	#should add further validation for other inputs.
+
 	has_and_belongs_to_many :categories
 end

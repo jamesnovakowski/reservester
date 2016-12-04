@@ -14,4 +14,16 @@ class User < ApplicationRecord
 
   has_many :restaurants, dependent: :destroy #Consider removing dependent: :destroy?
 
+  #Should add some validation for having name and email address
+
+  def is_owner?
+    return true if self.role == "owner"
+    return false
+  end
+
+  def is_patron?
+    return true if self.role == "patron"
+    return false
+  end
+
 end

@@ -1,7 +1,10 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :favorite, :add_category]
-  before_action :set_category, only: [:add_category]
+  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :favorite, :add_category, :remove_category]
+  before_action :set_category, only: [:add_category, :remove_category]
+  before_action :check_user_status, only: [:new, :edit, :create, :update, :destroy, :add_category]
+  before_action :check_is_owner, only: [:edit, :update, :destroy, :add_category]
 
+  
   # GET /restaurants
   # GET /restaurants.json
   def index
@@ -127,5 +130,23 @@ class RestaurantsController < ApplicationController
     def set_category
       @category = Category.where(name: params[:category])
     end
+
+    def check_user_status
+      if current_user.is_owner?
+        true
+      else
+        redirect_to :back, notice: "Your account does not have permission to modify #{@restaurant.name}"
+      end
+    end
+
+    def check_is_owner
+      if current_user.id == @restaurant.user_id
+        true
+      else
+        redirect_to :back, notice: "You are not an owner of #{@restaurant.name}, and cannot make changes to this restaurant."
+      end
+    end
+    
+  
 
 end
