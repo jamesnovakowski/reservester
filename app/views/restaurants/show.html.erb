@@ -57,38 +57,41 @@
 		<% @categories.each do |category| %>
 			<div class="category">
 				<%= category.name %>
-				<%= link_to restaurant_remove_category_path(:id => @restaurant, :category => category.name), method: :delete, category: category, :class => "btn btn-danger" do %>
-				  <span class="glyphicon glyphicon-trash" font-color="white" aria-hidden="true"></span>
+				<%if current_user && current_user.id == @restaurant.user_id %>
+					<%= link_to restaurant_remove_category_path(:id => @restaurant, :category => category.name), method: :delete, category: category, :class => "btn btn-danger" do %>
+					  <span class="glyphicon glyphicon-trash" font-color="white" aria-hidden="true"></span>
+					<% end %>
 				<% end %>
 			</div>
 		<% end %>
 	</div> <!-- panel-body-->
 	
-	<div class="panel-footer">
-		<%= form_tag('/restaurant/add_category', method: :post) %>
-			<% if @category.errors.any? %>
-				<div id="erro_explanation">
-					<h2> <%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+	<% if current_user && current_user.id == @restaurant.user_id %>
+		<div class="panel-footer">
+			<%= form_tag('/restaurant/add_category', method: :post) %>
+				<% if @category.errors.any? %>
+					<div id="erro_explanation">
+						<h2> <%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
 
-					<ul>
-						<% category.errors.full_messages.each do |message| %>
-								<li><%= message %></li>
-						<% end %>
-					</ul>
+						<ul>
+							<% category.errors.full_messages.each do |message| %>
+									<li><%= message %></li>
+							<% end %>
+						</ul>
+					</div>
+				<% end %>
+
+				<div class="field">
+					<%= select_tag "category", options_from_collection_for_select(@all_categories, "name", "name") %>
 				</div>
-			<% end %>
 
-			<div class="field">
-				<%= select_tag "category", options_from_collection_for_select(@all_categories, "name", "name") %>
-			</div>
+				<%= hidden_field_tag :id, @restaurant.id %>
 
-			<%= hidden_field_tag :id, @restaurant.id %>
-
-			<div class="actions">
-				<%= submit_tag("Add Category") %>
-			</div>
-
-	</div>
+				<div class="actions">
+					<%= submit_tag("Add Category") %>
+				</div>
+		</div>
+	<%end%>	
 </div>
 <p>
 <%= link_to 'Review this restaurant', new_restaurant_review_path(@restaurant, current_user) %>
