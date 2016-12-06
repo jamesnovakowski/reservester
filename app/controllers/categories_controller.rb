@@ -1,16 +1,18 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:destroy]
+  before_action :check_permission
 
   @@category_list = []
 
-  def add_all_categories
-    @categories = Category.all?
-    @categories.each do |c|
-      if c.name not in @@category.list
-        @@category_list.push(c.name)
-      end
-    end
-  end
+  # def add_all_categories
+  #   @categories = Category.all
+  #   @categories.each do |c|
+
+  #     if (c.name not in @@category.list)
+  #       @@category_list.push(c.name)
+  #     end
+  #   end
+  # end
 
   def new
   	@category = Category.new()
@@ -52,6 +54,12 @@ class CategoriesController < ApplicationController
 
   def set_category
   	@category = Category.find(params[:id])
+  end
+
+  def check_permission
+    unless current_user.email == "james.novakowski@gmail.com"
+      redirect_to :back, notice: "Your account does not have permission to alter categories."
+    end
   end
 
 end

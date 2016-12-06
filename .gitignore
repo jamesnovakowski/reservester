@@ -22,3 +22,6 @@
 
 # Ignore the image files in the database.
 /public/system/*
+
+# Ignore application configuration
+/config/application.yml
