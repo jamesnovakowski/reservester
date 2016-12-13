@@ -14,6 +14,9 @@ class User < ApplicationRecord
 
   has_many :restaurants, dependent: :destroy #Consider removing dependent: :destroy?
 
+  has_many :reservations, dependent: :destroy
+  has_many :reserved_restaurants, through: :reservations, source: :restaurant
+
   #Should add some validation for having name and email address
 
   def is_owner?

@@ -8,6 +8,32 @@
   <strong>Address:</strong>
   <%= @restaurant.address %>
 </p>
+<div id="map"></div>
+<script>
+  function initMap() {
+    var uluru = {lat: -25.363, lng: 131.044};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: ulruru,
+      map: map
+    });
+  }
+</script>
+<script>
+	function geocode() {
+		var addr = "319 Hurley St, Cambridge MA";
+		var geocode = google.maps.Geocoder.geocode({
+			address: addr
+		});
+		console.log(geocode)
+	}
+</script>
+<script async defer 
+	src= <%"https://maps.googleapis.com/maps/api/js?key=#{ENV['GMAPS_API_KEY']}&callback=initMap"%>>
+</script>
 
 
 <p>
@@ -94,7 +120,9 @@
 	<%end%>	
 </div>
 <p>
-<%= link_to 'Review this restaurant', new_restaurant_review_path(@restaurant, current_user) %>
+<% if current_user %>
+	<%= link_to 'Review this restaurant', new_restaurant_review_path(current_user, @restaurant) %>
+<% end %>
 </p>
 
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
