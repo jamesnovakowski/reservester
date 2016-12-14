@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  
-  
   get 'categories/index' => 'categories#index'
   resources :categories
   post 'restaurant/add_category' => 'restaurants#add_category'
@@ -12,6 +10,7 @@ Rails.application.routes.draw do
   resources :restaurants do
     put :favorite, on: :member
     resources :reviews
+    resources :reservations
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'restaurants#index'

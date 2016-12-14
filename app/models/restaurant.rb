@@ -7,6 +7,9 @@ class Restaurant < ApplicationRecord
 
 	belongs_to :user
 
+	has_many :reservations, dependent: :destroy
+	has_many :reserved_users, through: :reservations, source: :user
+
 	has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
 	#paperclip requires the image item be validated.

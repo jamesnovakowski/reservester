@@ -1,6 +1,10 @@
 <h1><%=@restaurant.name%></h1>
 
 <p>
+	<%= link_to 'Make Reservation', new_restaurant_reservation_path(@restaurant) %>
+</p>
+
+<p>
   <%= image_tag @restaurant.image.url(:medium) %>
 </p>
 
