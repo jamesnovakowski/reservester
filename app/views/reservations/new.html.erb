@@ -1,10 +1,18 @@
 <h1><%= "Reservation for #{@restaurant.name}"%></h1>
 
-
-<%  %>
-
 <%= form_for @reservation, :url => restaurant_reservations_path, method: "post" do |f| %>
-	
+	<% if @reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+      <% @reservation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 	<div class="field">
 		<%= f.label :select_date %>
 		<input type="text" data-provide='datepicker' name="res_date">
@@ -13,6 +21,11 @@
 	<div class="field">
 		<%= f.label :select_a_time %>
 		<%= select_tag(:res_time, options_for_select([['1:00',1], ['1:15',2], ['1:30',3], ['1:45',4], ['2:00',5]])) %>
+	</div>
+
+	<div class="field">
+		<%= f.label :number_of_guests %>
+		<%= f.number_field :num_guests%>
 	</div>
 
 	<div class="field">

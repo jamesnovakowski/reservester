@@ -4,6 +4,25 @@
 
 #map {
 	width: 100%;
+	max-width: 600px;
   height: 400px;
   background-color: grey;
+  border-radius: 10px
+}
+
+.panel .rest-attributes{
+}
+
+.panel .restaurant-name {
+	font-size: 26px;
+	width: 25%;
+}
+
+.panel .restaurant-address {
+	width:25%;
+}
+
+.panel .rest-image {
+	float: left;
+	display: inline;
 }

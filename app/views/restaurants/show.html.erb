@@ -1,8 +1,16 @@
 <h1><%=@restaurant.name%></h1>
 
-<p>
-	<%= link_to 'Make Reservation', new_restaurant_reservation_path(@restaurant) %>
-</p>
+<div class="panel">
+	<% if current_user %>
+		<%= link_to 'Make Reservation', new_restaurant_reservation_path(@restaurant) %>
+		<% reservations = Reservation.where(user_id: current_user.id, restaurant_id: @restaurant.id) %></br>
+		<% reservations.each do |reservation| %>
+			<%= "Reservation user: #{reservation.user_id}, #{reservation.comment}" %></br>
+		<% end %>
+	<% else %>
+		Please <%= link_to 'Log in', new_user_session_path %> to <em>make a reservation</em>.
+	<% end %>
+</div>
 
 <p>
   <%= image_tag @restaurant.image.url(:medium) %>
@@ -12,7 +20,9 @@
   <strong>Address:</strong>
   <%= @restaurant.address %>
 </p>
+
 <div id="map"></div>
+
 <script>
   function initMap() {
     var uluru = {lat: -25.363, lng: 131.044};
